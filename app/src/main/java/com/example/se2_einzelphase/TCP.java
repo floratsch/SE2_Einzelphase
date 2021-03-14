@@ -16,6 +16,7 @@ public class TCP extends Thread {
 
         try {
             Socket socket = new Socket("se2-isys.aau.at", 53212);
+
             DataOutputStream toSever = new DataOutputStream(socket.getOutputStream());
 
             toSever.writeBytes(sentence + '\n');
@@ -23,9 +24,19 @@ public class TCP extends Thread {
             BufferedReader fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             res = fromServer.readLine();
 
+            socket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void sendMessage(String num) {
+        this.sentence = num;
+    }
+
+    public String getAnswer() {
+        return this.res;
     }
 }
